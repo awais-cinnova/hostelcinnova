@@ -4,7 +4,6 @@ import { persist } from 'zustand/middleware';
 export const useDataStore = create(
   persist(
     (set, get) => ({
-      // ==== INITIAL DATA (moved from mockData + rooms + roomTypes) ====
       owners: [
         { id:"1", name:"Emilsy Johnson", email:"emily.johnson@cityhostels.com", password:"ej1234", role:"owner", phoneNumber:"+1 (415) 555-0198", age:32, dob:"1992-06-14", gender:"Female", passportNumber:"X1234567", nationality:"American", maritalStatus:"Single" },
         { id:"2", name:"Michael Smith",  email:"michael.smith@coasthostel.com", password:"ms1234", role:"owner", phoneNumber:"+1 (212) 555-2345", age:40, dob:"1985-03-02", gender:"Male",   passportNumber:"Y9876543", nationality:"American", maritalStatus:"Married" },
@@ -14,7 +13,6 @@ export const useDataStore = create(
         { id:"6", name:"Chris Brown",    email:"chris.brown@mountainlodge.com", password:"cb1234", role:"owner", phoneNumber:"+1 (503) 555-0392", age:42, dob:"1981-01-20", gender:"Male", passportNumber:"U3456789", nationality:"American", maritalStatus:"Married" },
         { id:"7", name:"Charles Dan",    email:"charles.dan@mountaintravelling.com", password:"cd1234", role:"owner", phoneNumber:"+1 (212) 555-0765", age:38, dob:"1985-11-05", gender:"Male", passportNumber:"T8765432", nationality:"American", maritalStatus:"Married" },
         { id:"8", name:"Harry Smith",    email:"harry.smith@motel.com", password:"hs1234", role:"owner", phoneNumber:"+1 (312) 555-0890", age:31, dob:"1992-07-18", gender:"Male", passportNumber:"S0987654", nationality:"American", maritalStatus:"Single" },
-        // admin is separate in auth, but keep it here if you need to list them
        ],
       admin:[
          { id:"0398", name:"Awais Arif",  email:"awais.arif@gmail.com", password:"aa1234", role:"admin" }
@@ -28,32 +26,39 @@ export const useDataStore = create(
       ],
 
       rooms: [
-        { id:"r1", hostelId:"h1", typeId:"t1", rooms:10, bedsAvailable:6, bedsOccupied:4, roomsAvailable:6, roomsOccupied:4 },
-        { id:"r2", hostelId:"h1", typeId:"t2", rooms:5,  bedsAvailable:4, bedsOccupied:6, roomsAvailable:2, roomsOccupied:3 },
-        { id:"r3", hostelId:"h1", typeId:"t3", rooms:6,  bedsAvailable:5, bedsOccupied:13,roomsAvailable:1, roomsOccupied:5 },
-        { id:"r4", hostelId:"h1", typeId:"t4", rooms:4,  bedsAvailable:4, bedsOccupied:12,roomsAvailable:1, roomsOccupied:3 },
-        { id:"r5", hostelId:"h2", typeId:"t1", rooms:6,  bedsAvailable:4, bedsOccupied:2, roomsAvailable:4, roomsOccupied:2 },
-        { id:"r6", hostelId:"h2", typeId:"t2", rooms:3,  bedsAvailable:4, bedsOccupied:2, roomsAvailable:2, roomsOccupied:1 },
-        { id:"r7", hostelId:"h2", typeId:"t3", rooms:2,  bedsAvailable:3, bedsOccupied:3, roomsAvailable:1, roomsOccupied:1 },
-        { id:"r8", hostelId:"h2", typeId:"t4", rooms:4,  bedsAvailable:12,bedsOccupied:4, roomsAvailable:3, roomsOccupied:1 },
-        { id:"r9", hostelId:"h3", typeId:"t1", rooms:5,  bedsAvailable:2, bedsOccupied:3, roomsAvailable:2, roomsOccupied:3 },
-        { id:"r10",hostelId:"h3", typeId:"t2", rooms:4,  bedsAvailable:2, bedsOccupied:6, roomsAvailable:1, roomsOccupied:3 },
-        { id:"r11",hostelId:"h3", typeId:"t3", rooms:3,  bedsAvailable:3, bedsOccupied:6, roomsAvailable:1, roomsOccupied:2 },
-        { id:"r12",hostelId:"h3", typeId:"t4", rooms:2,  bedsAvailable:2, bedsOccupied:6, roomsAvailable:0, roomsOccupied:2 },
-        { id:"r13",hostelId:"h4", typeId:"t1", rooms:3,  bedsAvailable:2, bedsOccupied:1, roomsAvailable:2, roomsOccupied:1 },
-        { id:"r14",hostelId:"h4", typeId:"t2", rooms:4,  bedsAvailable:2, bedsOccupied:6, roomsAvailable:1, roomsOccupied:3 },
-        { id:"r15",hostelId:"h4", typeId:"t3", rooms:7,  bedsAvailable:9, bedsOccupied:12,roomsAvailable:3, roomsOccupied:4 },
-        { id:"r16",hostelId:"h4", typeId:"t4", rooms:8,  bedsAvailable:24,bedsOccupied:8, roomsAvailable:6, roomsOccupied:2 },
-        { id:"r17",hostelId:"h5", typeId:"t1", rooms:3,  bedsAvailable:1, bedsOccupied:2, roomsAvailable:1, roomsOccupied:2 },
-        { id:"r18",hostelId:"h5", typeId:"t2", rooms:2,  bedsAvailable:1, bedsOccupied:3, roomsAvailable:0, roomsOccupied:2 },
-        { id:"r19",hostelId:"h5", typeId:"t3", rooms:3,  bedsAvailable:3, bedsOccupied:6, roomsAvailable:1, roomsOccupied:2 },
-        { id:"r20",hostelId:"h5", typeId:"t4", rooms:2,  bedsAvailable:3, bedsOccupied:5, roomsAvailable:0, roomsOccupied:2 }
+        { id:"r1", hostelId:"h1", typeId:"t1",beds:10, rooms:10, bedsAvailable:6,  bedsOccupied:4, roomsAvailable:6, roomsOccupied:4 },
+        { id:"r2", hostelId:"h1", typeId:"t2",beds:10, rooms:5,  bedsAvailable:4,  bedsOccupied:6, roomsAvailable:2, roomsOccupied:3 },
+        { id:"r3", hostelId:"h1", typeId:"t3",beds:18, rooms:6,  bedsAvailable:5,  bedsOccupied:13,roomsAvailable:1, roomsOccupied:5 },
+        { id:"r4", hostelId:"h1", typeId:"t4",beds:16, rooms:4,  bedsAvailable:4,  bedsOccupied:12,roomsAvailable:1, roomsOccupied:3 },
+        { id:"r5", hostelId:"h2", typeId:"t1",beds:6, rooms:6,  bedsAvailable:4,   bedsOccupied:2, roomsAvailable:4, roomsOccupied:2 },
+        { id:"r6", hostelId:"h2", typeId:"t2",beds:6, rooms:3,  bedsAvailable:4,   bedsOccupied:2, roomsAvailable:2, roomsOccupied:1 },
+        { id:"r7", hostelId:"h2", typeId:"t3",beds:6, rooms:2,  bedsAvailable:3,   bedsOccupied:3, roomsAvailable:1, roomsOccupied:1 },
+        { id:"r8", hostelId:"h2", typeId:"t4",beds:16, rooms:4,  bedsAvailable:12, bedsOccupied:4, roomsAvailable:3, roomsOccupied:1 },
+        { id:"r9", hostelId:"h3", typeId:"t1",beds:5, rooms:5,  bedsAvailable:2,   bedsOccupied:3, roomsAvailable:2, roomsOccupied:3 },
+        { id:"r10",hostelId:"h3", typeId:"t2",beds:8, rooms:4,  bedsAvailable:2,   bedsOccupied:6, roomsAvailable:1, roomsOccupied:3 },
+        { id:"r11",hostelId:"h3", typeId:"t3",beds:9, rooms:3,  bedsAvailable:3,   bedsOccupied:6, roomsAvailable:1, roomsOccupied:2 },
+        { id:"r12",hostelId:"h3", typeId:"t4",beds:8, rooms:2,  bedsAvailable:2,   bedsOccupied:6, roomsAvailable:0, roomsOccupied:2 },
+        { id:"r13",hostelId:"h4", typeId:"t1",beds:3, rooms:3,  bedsAvailable:2,   bedsOccupied:1, roomsAvailable:2, roomsOccupied:1 },
+        { id:"r14",hostelId:"h4", typeId:"t2",beds:8, rooms:4,  bedsAvailable:2,   bedsOccupied:6, roomsAvailable:1, roomsOccupied:3 },
+        { id:"r15",hostelId:"h4", typeId:"t3",beds:21, rooms:7,  bedsAvailable:9,  bedsOccupied:12,roomsAvailable:3, roomsOccupied:4 },
+        { id:"r16",hostelId:"h4", typeId:"t4",beds:32, rooms:8,  bedsAvailable:24, bedsOccupied:8, roomsAvailable:6, roomsOccupied:2 },
+        { id:"r17",hostelId:"h5", typeId:"t1",beds:3, rooms:3,  bedsAvailable:1,   bedsOccupied:2, roomsAvailable:1, roomsOccupied:2 },
+        { id:"r18",hostelId:"h5", typeId:"t2",beds:4, rooms:2,  bedsAvailable:1,   bedsOccupied:3, roomsAvailable:0, roomsOccupied:2 },
+        { id:"r19",hostelId:"h5", typeId:"t3",beds:9, rooms:3,  bedsAvailable:3,   bedsOccupied:6, roomsAvailable:1, roomsOccupied:2 },
+        { id:"r20",hostelId:"h5", typeId:"t4",beds:8, rooms:2,  bedsAvailable:3,   bedsOccupied:5, roomsAvailable:0, roomsOccupied:2 }
+      ],
+      beds: [
+        { id: "b1", hostelId:"h1", beds:10, bedsAvailable:6,  bedsOccupied:4 },
+        { id: "b2", hostelId:"h2", beds:16, bedsAvailable:12, bedsOccupied:4 },
+        { id: "b3", hostelId:"h3", beds:5,  bedsAvailable:2,  bedsOccupied:3 },
+        { id: "b4", hostelId:"h4", beds:3,  bedsAvailable:2,  bedsOccupied:1 },
+        { id: "b5", hostelId:"h5", beds:3,  bedsAvailable:1,  bedsOccupied:2 },
       ],
 
       roomTypes: [
-        { id:"t1", name:"Single Bed" },
-        { id:"t2", name:"Double Bed" },
-        { id:"t3", name:"Triple" },
+        { id:"t1", name:"Single Bed Room" },
+        { id:"t2", name:"Double Bed Room" },
+        { id:"t3", name:"Triple Bed Room" },
         { id:"t4", name:"Quadruple Room" }
       ],
 
@@ -82,6 +87,15 @@ export const useDataStore = create(
         set({ rooms: get().rooms.map(r => r.id === id ? { ...r, ...patch } : r) }),
       deleteRoom: (id) =>
         set({ rooms: get().rooms.filter(r => r.id !== id) }),
+
+
+
+      addBed: (bed) => set({ beds: [...get().beds, bed] }),
+      updateBed: (id, patch) =>
+        set({ beds: get().beds.map(b => b.id === id ? { ...b, ...patch } : b) }),
+      deleteBed: (id) =>
+        set({ beds: get().beds.filter(b => b.id !== id) }),
+
     }),
     { name: 'data-storage' }
   )

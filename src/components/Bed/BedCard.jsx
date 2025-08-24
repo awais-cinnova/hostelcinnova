@@ -1,8 +1,8 @@
 import { useState } from "react"
 import { useDataStore } from "../../store/dataStore"
 import { Button } from "@/components/ui/button"
-import RoomDetail from "./RoomDetail"
-import RoomForm from "./RoomForm"
+import BedDetail from "./BedDetail"
+import BedForm from "./BedForm"
 
 import {
   Dialog,
@@ -29,25 +29,29 @@ import {
   AlertDescription,
 } from "@/components/ui/alert"
 
-const RoomCard = ({ room, type, hostel }) => {
-  const deleteRoom = useDataStore((state) => state.deleteRoom)
-  const updateRoom = useDataStore((state) => state.updateRoom)
+const BedCard = ({ bed, type, hostel }) => {
+  const deleteBed = useDataStore((state) => state.deleteBed)
+  const updateBed = useDataStore((state) => state.updateBed)
 
   const [isEditing, setIsEditing] = useState(false)
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
   const [editData, setEditData] = useState({
-    rooms: room.rooms,
-    roomsAvailable: room.roomsAvailable,
-    roomsOccupied: room.roomsOccupied,
+    beds: bed.beds,
+    bedsAvailable: bed.bedsAvailable,
+    bedsOccupied: bed.bedsOccupied,
   })
   const [error, setError] = useState("")
 
   // -------- Validation --------
   const validateData = () => {
-    if (editData.rooms < editData.roomsOccupied)  return "Occupied rooms cannot exceed total rooms."
-    if (editData.rooms < editData.roomsAvailable + editData.roomsOccupied)  return "Available + Occupied rooms cannot exceed total rooms."
-    if (editData.bedsAvailable < 0 || editData.bedsOccupied < 0)  return "Beds cannot be negative."
-
+    if (editData.beds < editData.bedsOccupied) 
+      return "Occupied beds cannot exceed total beds."
+    if (editData.beds < editData.bedsAvailable + editData.bedsOccupied) 
+      return "Available + Occupied beds cannot exceed total beds."
+    
+    if (editData.bedsAvailable < 0 || editData.bedsOccupied < 0) {
+      return "Beds cannot be negative."
+    }
     return ""
   }
 
@@ -57,31 +61,39 @@ const RoomCard = ({ room, type, hostel }) => {
       setError(validationError)
       return
     }
-    updateRoom(room.id, editData)
+    updateBed(bed.id, editData)
     setIsEditing(false)
     setError("")
   }
 
   const handleDelete = () => {
-    deleteRoom(room.id)
+    deleteBed(bed.id)
     setShowDeleteConfirm(false)
   }
 
   return (
-    <div className="border p-4 rounded-lg shadow bg-[#F8B6000D]">
-      {/* Room details view */}
-      <RoomDetail room={room} type={type} hostel={hostel}
-        onEdit={() => setIsEditing(true)} onDelete={() => setShowDeleteConfirm(true)}
+    <div className="border p-4 rounded-lg shadow bg-[#E8F0FE]">
+      {/* Bed details view */}
+      <BedDetail
+        bed={bed}
+        type={type}
+        hostel={hostel}
+        onEdit={() => setIsEditing(true)}
+        onDelete={() => setShowDeleteConfirm(true)}
       />
 
       {/* ---------- Edit Dialog ---------- */}
       <Dialog open={isEditing} onOpenChange={setIsEditing}>
         <DialogContent className="max-w-lg">
           <DialogHeader>
-            <DialogTitle>Edit Room</DialogTitle>
+            <DialogTitle>Edit Bed</DialogTitle>
           </DialogHeader>
 
-          <RoomForm editData={editData} setEditData={setEditData} hostel={hostel}/>
+          <BedForm
+            editData={editData}
+            setEditData={setEditData}
+            hostel={hostel}
+          />
 
           {error && (
             <Alert variant="destructive" className="mt-3">
@@ -105,7 +117,7 @@ const RoomCard = ({ room, type, hostel }) => {
           <AlertDialogHeader>
             <AlertDialogTitle>Are you sure?</AlertDialogTitle>
             <AlertDialogDescription>
-              This action will permanently delete the room record. You can’t
+              This action will permanently delete the bed record. You can’t
               undo this.
             </AlertDialogDescription>
           </AlertDialogHeader>
@@ -124,4 +136,4 @@ const RoomCard = ({ room, type, hostel }) => {
   )
 }
 
-export default RoomCard
+export default BedCard

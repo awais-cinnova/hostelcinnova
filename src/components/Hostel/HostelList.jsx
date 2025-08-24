@@ -15,7 +15,7 @@ const HostelList = ({ hostels = [] }) => {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       {hostels.map((hostel) => (
-         <div className="border rounded-md p-4 shadow hover:shadow-lg transition cursor-pointer " onClick={() => navigate(`/hostel/${hostel.id}`)}>
+         <div key={hostel.id}  className="border rounded-md p-4 shadow hover:shadow-lg transition cursor-pointer " onClick={() => navigate(`/hostel/${hostel.id}`)}>
             <HostelCard key={hostel.id} hostel={hostel} className="text-2xl" />
         </div>
       ))}
