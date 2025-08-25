@@ -15,7 +15,7 @@ const AdminTableActions = () => {
           
           
           <Button variant ="default" size="primarysize" className="text-white font-semibold text-[16px] leading-[120%] tracking-[-0.05em] text-center flex gap-3 cursor-pointer">
-             <Image src="plus-icon.svg" alt="Add" className="w-6 h-6" />Add Project</Button>
+             <Image src="plus-icon.svg" alt="Add" className="w-6 h-6" />Add Owner</Button>
         </div>
 
   )

@@ -44,21 +44,15 @@ const RoomBedTabs = ({ hostel, hostelRooms, hostelBeds, roomTypes }) => {
         <>
           <h2 className="text-2xl font-semibold mt-4 mb-3">Bed Details</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {hostelBeds?.length > 0 ? (
-              hostelBeds?.map((bed) => {
-                const type = roomTypes.find((t) => t.id === bed.typeId);
-                return (
-                  <BedCard
-                    key={bed.id}
-                    bed={bed}
-                    type={type}
-                    hostel={hostel}
-                  />
-                );
-              })
-            ) : (
-              <p className="text-gray-500">No beds available.</p>
-            )}
+                  {hostelBeds?.length > 0 ? (
+                    hostelBeds?.map((bed) => {
+                      return (
+                        <BedCard  key={bed.id}  bed={bed}  hostel={hostel} />
+                      );
+                    })
+                  ) : (
+                    <p className="text-gray-500">No beds available.</p>
+                  )}
           </div>
         </>
       )}

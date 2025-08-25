@@ -1,33 +1,9 @@
 import { useState } from "react"
 import { useDataStore } from "../../store/dataStore"
-import { Button } from "@/components/ui/button"
 import RoomDetail from "./RoomDetail"
 import RoomForm from "./RoomForm"
-
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogFooter,
-} from "@/components/ui/dialog"
-
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog"
-
-import {
-  Alert,
-  AlertTitle,
-  AlertDescription,
-} from "@/components/ui/alert"
+import Alert from "./Alert"
+import EditDialog from "./EditDialog"
 
 const RoomCard = ({ room, type, hostel }) => {
   const deleteRoom = useDataStore((state) => state.deleteRoom)
@@ -66,60 +42,35 @@ const RoomCard = ({ room, type, hostel }) => {
     deleteRoom(room.id)
     setShowDeleteConfirm(false)
   }
+    const handleCancel = () => {
+    setIsEditing(false)
+    setError("")   // reset error when closing
+    setEditData({
+      rooms: room.rooms,
+      roomsAvailable: room.roomsAvailable,
+      roomsOccupied: room.roomsOccupied,
+    }) // reset back to original values
+  }
 
+
+     const title = "Edit Room";
+     const descrip = "Update the details of Room below. All field are required."
   return (
     <div className="border p-4 rounded-lg shadow bg-[#F8B6000D]">
       {/* Room details view */}
       <RoomDetail room={room} type={type} hostel={hostel}
         onEdit={() => setIsEditing(true)} onDelete={() => setShowDeleteConfirm(true)}
       />
+      
 
-      {/* ---------- Edit Dialog ---------- */}
-      <Dialog open={isEditing} onOpenChange={setIsEditing}>
-        <DialogContent className="max-w-lg">
-          <DialogHeader>
-            <DialogTitle>Edit Room</DialogTitle>
-          </DialogHeader>
-
-          <RoomForm editData={editData} setEditData={setEditData} hostel={hostel}/>
-
-          {error && (
-            <Alert variant="destructive" className="mt-3">
-              <AlertTitle>Validation Error</AlertTitle>
-              <AlertDescription>{error}</AlertDescription>
-            </Alert>
-          )}
-
-          <DialogFooter className="mt-4 flex justify-end gap-2">
-            <Button variant="outline" onClick={() => setIsEditing(false)}>
-              Cancel
-            </Button>
-            <Button onClick={handleSave}>Save</Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+      <EditDialog open = {isEditing} onOpenChange={setIsEditing} title={title} description={descrip} 
+         error = {error} onCancel={handleCancel} onSave={handleSave} 
+      >
+          <RoomForm editData={editData} setEditData={setEditData} hostel={hostel} />
+      </EditDialog>
 
       {/* ---------- Delete Confirmation ---------- */}
-      <AlertDialog open={showDeleteConfirm} onOpenChange={setShowDeleteConfirm}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-            <AlertDialogDescription>
-              This action will permanently delete the room record. You can’t
-              undo this.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction
-              onClick={handleDelete}
-              className="bg-red-600 text-white hover:bg-red-700"
-            >
-              Delete
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+      <Alert open={showDeleteConfirm}  onOpenChange={setShowDeleteConfirm} onConfirm={handleDelete}  type="room" />
     </div>
   )
 }
